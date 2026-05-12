@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.android.nodocivico.ui.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/createReportFragment"
+        android:name="com.android.nodocivico.ui.CreateReportFragment"
+        android:label="fragment_create_report"
+        tools:layout="@layout/fragment_create_report" />
+    <fragment
+        android:id="@+id/reportListFragment"
+        android:name="com.android.nodocivico.ui.ReportListFragment"
+        android:label="fragment_report_list"
+        tools:layout="@layout/fragment_report_list" />
+    <fragment
+        android:id="@+id/reportDetailFragment"
+        android:name="com.android.nodocivico.ui.ReportDetailFragment"
+        android:label="fragment_report_detail"
+        tools:layout="@layout/fragment_report_detail" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.android.nodocivico.ui.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/syncStatusFragment"
+        android:name="com.android.nodocivico.ui.SyncStatusFragment"
+        android:label="fragment_sync_status"
+        tools:layout="@layout/fragment_sync_status" />
+</navigation>
