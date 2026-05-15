@@ -1,60 +1,90 @@
 package com.android.nodocivico.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.ImageButton
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.android.nodocivico.R
+import com.android.nodocivico.databinding.FragmentCreateReportBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class CreateReportFragment : Fragment(R.layout.fragment_create_report) {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CreateReportFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class CreateReportFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentCreateReportBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val btnBack = view.findViewById<ImageButton>(R.id.btnBack)
+
+        btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        _binding = FragmentCreateReportBinding.bind(view)
+
+        setupSpinners()
+
+        binding.btnSaveReport.setOnClickListener {
+            validateAndSave()
+        }
+
+        binding.btnSaveOffline.setOnClickListener {
+            validateAndSaveOffline()
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_report, container, false)
+    private fun setupSpinners() {
+        val categories = listOf("Alumbrado", "Aseo", "Servicios", "Seguridad", "Zonas verdes")
+        val priorities = listOf("Baja", "Media", "Alta")
+
+        binding.spinnerCategory.adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            categories
+        )
+
+        binding.spinnerPriority.adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            priorities
+        )
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CreateReportFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CreateReportFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun validateAndSave() {
+        val title = binding.etReportTitle.text.toString().trim()
+        val description = binding.etDescription.text.toString().trim()
+        val location = binding.etLocation.text.toString().trim()
+
+        if (title.isEmpty()) {
+            binding.etReportTitle.error = "Ingrese un título"
+            return
+        }
+
+        if (description.isEmpty()) {
+            binding.etDescription.error = "Ingrese una descripción"
+            return
+        }
+
+        if (location.isEmpty()) {
+            binding.etLocation.error = "Ingrese una ubicación"
+            return
+        }
+
+        Toast.makeText(requireContext(), "Reporte guardado correctamente", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(R.id.action_createReportFragment_to_reportListFragment)
+    }
+
+    private fun validateAndSaveOffline() {
+        Toast.makeText(requireContext(), "Reporte guardado offline", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(R.id.action_createReportFragment_to_reportListFragment)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
