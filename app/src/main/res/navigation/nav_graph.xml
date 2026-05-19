@@ -2,7 +2,32 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.android.nodocivico.ui.SplashFragment"
+        android:label="Splash">
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.android.nodocivico.ui.LoginFragment"
+        android:label="Identificación">
+        <argument
+            android:name="userName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/homeFragment"
@@ -52,7 +77,16 @@
     <fragment
         android:id="@+id/reportDetailFragment"
         android:name="com.android.nodocivico.ui.ReportDetailFragment"
-        android:label="Detalle del reporte" />
+        android:label="Detalle del reporte">
+        <action
+            android:id="@+id/action_reportDetailFragment_to_editReportFragment"
+            app:destination="@id/editReportFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editReportFragment"
+        android:name="com.android.nodocivico.ui.EditReportFragment"
+        android:label="Editar reporte" />
 
     <fragment
         android:id="@+id/settingsFragment"
@@ -63,5 +97,20 @@
         android:id="@+id/syncStatusFragment"
         android:name="com.android.nodocivico.ui.SyncStatusFragment"
         android:label="Sincronización" />
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.android.nodocivico.ui.MapFragment"
+        android:label="Mapa" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.android.nodocivico.ui.ProfileFragment"
+        android:label="Perfil" />
+
+    <fragment
+        android:id="@+id/calendarRemindersFragment"
+        android:name="com.android.nodocivico.ui.CalendarRemindersFragment"
+        android:label="Recordatorios" />
 
 </navigation>

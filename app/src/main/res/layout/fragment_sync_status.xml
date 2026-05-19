@@ -124,27 +124,22 @@
                     android:id="@+id/tvConnectionStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Indicador visual de conexión"
-                    android:textColor="#64748B"
-                    android:textSize="16sp" />
+                    android:text="Conexión activa"
+                    android:textColor="#16A34A"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvSyncQueue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Lista de pendientes"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:text="0 reportes pendientes por sincronizar, ¿desea sincronizar ahora?"
                     android:textColor="#64748B"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tvRetryInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Botón de reintento"
-                    android:textColor="#64748B"
-                    android:textSize="16sp" />
+
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

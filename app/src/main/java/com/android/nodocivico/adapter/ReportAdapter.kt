@@ -1,97 +1,64 @@
-package com.android.nodocivico.adapter;
+package com.android.nodocivico.adapter
 
-import android.graphics.Color;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-import com.android.nodocivico.R;
-import com.android.nodocivico.model.Report;
-import java.util.List;
+import android.graphics.Color
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.android.nodocivico.R
+import com.android.nodocivico.model.Report
 
-public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportViewHolder> {
+class ReportAdapter(
+    private var reports: List<Report>,
+    private val listener: (Report) -> Unit
+) : RecyclerView.Adapter<ReportAdapter.ReportViewHolder>() {
 
-    private final List<Report> reports;
-    private final OnReportClickListener listener;
-
-    public interface OnReportClickListener {
-        void onReportClick(Report report);
+    fun setReports(newReports: List<Report>) {
+        this.reports = newReports
+        notifyDataSetChanged()
     }
 
-    public ReportAdapter(List<Report> reports, OnReportClickListener listener) {
-        this.reports = reports;
-        this.listener = listener;
+    class ReportViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvReportInitial: TextView = itemView.findViewById(R.id.tvReportInitial)
+        val tvReportTitle: TextView = itemView.findViewById(R.id.tvReportTitle)
+        val tvReportInfo: TextView = itemView.findViewById(R.id.tvReportInfo)
+        val tvReportTime: TextView = itemView.findViewById(R.id.tvReportTime)
+        val tvReportStatus: TextView = itemView.findViewById(R.id.tvReportStatus)
     }
 
-    public static class ReportViewHolder extends RecyclerView.ViewHolder {
-
-        TextView tvReportInitial;
-        TextView tvReportTitle;
-        TextView tvReportInfo;
-        TextView tvReportTime;
-        TextView tvReportStatus;
-
-        public ReportViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            tvReportInitial = itemView.findViewById(R.id.tvReportInitial);
-            tvReportTitle = itemView.findViewById(R.id.tvReportTitle);
-            tvReportInfo = itemView.findViewById(R.id.tvReportInfo);
-            tvReportTime = itemView.findViewById(R.id.tvReportTime);
-            tvReportStatus = itemView.findViewById(R.id.tvReportStatus);
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReportViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_report, parent, false)
+        return ReportViewHolder(view)
     }
 
-    @NonNull
-    @Override
-    public ReportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_report, parent, false);
+    override fun onBindViewHolder(holder: ReportViewHolder, position: Int) {
+        val report = reports[position]
 
-        return new ReportViewHolder(view);
-    }
+        holder.tvReportInitial.text = report.title.firstOrNull()?.uppercase() ?: "R"
+        holder.tvReportTitle.text = report.title
+        holder.tvReportInfo.text = "Categoría: ${report.category} · Prioridad ${report.priority}"
+        holder.tvReportTime.text = report.time
+        holder.tvReportStatus.text = report.status
 
-    @Override
-    public void onBindViewHolder(@NonNull ReportViewHolder holder, int position) {
-        Report report = reports.get(position);
-
-        String title = report.getTitle();
-
-        if (title != null && !title.isEmpty()) {
-            holder.tvReportInitial.setText(title.substring(0, 1).toUpperCase());
-        } else {
-            holder.tvReportInitial.setText("R");
-        }
-
-        holder.tvReportTitle.setText(report.getTitle());
-        holder.tvReportInfo.setText(
-                "Categoría: " + report.getCategory() + " · Prioridad " + report.getPriority()
-        );
-        holder.tvReportTime.setText(report.getTime());
-        holder.tvReportStatus.setText(report.getStatus());
-
-        if ("Abierto".equals(report.getStatus())) {
-            holder.tvReportStatus.setBackgroundResource(R.drawable.bg_status_open);
-            holder.tvReportStatus.setTextColor(Color.parseColor("#2563EB"));
-        } else if ("En proceso".equals(report.getStatus())) {
-            holder.tvReportStatus.setBackgroundResource(R.drawable.bg_status_progress);
-            holder.tvReportStatus.setTextColor(Color.parseColor("#A16207"));
-        } else if ("Cerrado".equals(report.getStatus())) {
-            holder.tvReportStatus.setBackgroundResource(R.drawable.bg_status_closed);
-            holder.tvReportStatus.setTextColor(Color.parseColor("#16A34A"));
-        }
-
-        holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onReportClick(report);
+        when (report.status) {
+            "Abierto", "Pendiente" -> {
+                holder.tvReportStatus.setBackgroundResource(R.drawable.bg_status_open)
+                holder.tvReportStatus.setTextColor(Color.parseColor("#2563EB"))
             }
-        });
+            "En proceso" -> {
+                holder.tvReportStatus.setBackgroundResource(R.drawable.bg_status_progress)
+                holder.tvReportStatus.setTextColor(Color.parseColor("#A16207"))
+            }
+            "Cerrado", "Completado" -> {
+                holder.tvReportStatus.setBackgroundResource(R.drawable.bg_status_closed)
+                holder.tvReportStatus.setTextColor(Color.parseColor("#16A34A"))
+            }
+        }
+
+        holder.itemView.setOnClickListener { listener(report) }
     }
 
-    @Override
-    public int getItemCount() {
-        return reports.size();
-    }
+    override fun getItemCount(): Int = reports.size
 }

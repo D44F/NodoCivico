@@ -11,14 +11,42 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvHomeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Resumen general"
+                android:textColor="#1F2937"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvWelcomeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="#E0E7FF"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
+                android:text="Usuario"
+                android:textColor="#2563EB"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
         <TextView
-            android:id="@+id/tvHomeTitle"
+            android:id="@+id/tvConnectionStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Resumen general"
-            android:textColor="#1F2937"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="4dp"
+            android:text="● Conectado (Online)"
+            android:textColor="#16A34A"
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -140,59 +168,70 @@
                 android:padding="18dp">
 
                 <TextView
+                    android:id="@+id/tvSyncStatusTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Estado offline"
+                    android:text="Estado de sincronización"
                     android:textColor="#1F2937"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvOfflineStatus"
+                    android:id="@+id/tvSyncStatusDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="La app guarda reportes localmente y marca los cambios pendientes de sincronización."
+                    android:text="Todos los reportes están actualizados en el servidor."
                     android:textColor="#64748B"
                     android:textSize="14sp" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <!-- Botones de Acción -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/btnNewReport"
-                android:layout_width="0dp"
-                android:layout_height="52dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="12dp"
                 android:backgroundTint="#2563EB"
-                android:text="Nuevo reporte"
-                android:textColor="#FFFFFF" />
+                android:text="NUEVO REPORTE CIUDADANO"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnViewReports"
-                android:layout_width="0dp"
-                android:layout_height="52dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:backgroundTint="#E8EEF8"
-                android:text="Ver reportes"
-                android:textColor="#2563EB" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btnSync"
-                android:layout_width="0dp"
-                android:layout_height="52dp"
-                android:layout_weight="1"
-                android:backgroundTint="#E8EEF8"
-                android:text="Sincronizar"
-                android:textColor="#1F2937" />
+                <Button
+                    android:id="@+id/btnViewReports"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
+                    android:text="VER REPORTES"
+                    android:textColor="#2563EB"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btnSync"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
+                    android:text="SINCRONIZAR"
+                    android:textColor="#1F2937"
+                    android:textSize="13sp" />
+            </LinearLayout>
 
         </LinearLayout>
 
